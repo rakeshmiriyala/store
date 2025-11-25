@@ -115,7 +115,7 @@ export const Header = () => {
           </Link>
 
           {/* Search */}
-          <div className="hidden md:flex flex-1 max-w-2xl">
+          {/* <div className="hidden md:flex flex-1 max-w-2xl">
             <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               <Input
@@ -124,7 +124,7 @@ export const Header = () => {
                 className="pl-10 pr-4 h-11 w-full"
               />
             </div>
-          </div>
+          </div> */}
 
           {/* Actions */}
           <div className="flex items-center gap-1 md:gap-2">
