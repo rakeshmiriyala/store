@@ -80,7 +80,7 @@ Deno.serve(async (req) => {
     // Fetch products data from the GitHub repository
     console.log('Fetching products from GitHub...')
     const response = await fetch(
-      'https://raw.githubusercontent.com/harshasharma21/supabase-sync-hub/main/src/data/mockData.ts'
+      'https://raw.githubusercontent.com/harshasharma21/database-connect-pro/main/src/data/mockData.ts'
     )
     const content = await response.text()
 
