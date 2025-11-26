@@ -10,6 +10,7 @@ interface MobileMenuProps {
 
 export const MobileMenu = ({ user }: MobileMenuProps) => {
   const [open, setOpen] = useState(false);
+  const [getInTouchOpen, setGetInTouchOpen] = useState(false); // State for "Get in Touch"
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -19,7 +20,7 @@ export const MobileMenu = ({ user }: MobileMenuProps) => {
           <span className="sr-only">Toggle menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="w-[280px]">
+      <SheetContent side="right" className="w-[280px]">
         <nav className="flex flex-col gap-2 mt-6">
           <Link to="/" onClick={() => setOpen(false)}>
             <Button variant="ghost" className="w-full justify-start">
@@ -50,20 +51,28 @@ export const MobileMenu = ({ user }: MobileMenuProps) => {
               </Link>
             </>
           )}
-          <div className="border-t pt-2 mt-2">
-            <p className="text-sm font-semibold mb-2 px-2 text-muted-foreground">
+          <div className="">
+            <Button
+              variant="ghost"
+              className="w-full justify-start"
+              onClick={() => setGetInTouchOpen(!getInTouchOpen)}
+            >
               Get in Touch
-            </p>
-            <Link to="/contact-us" onClick={() => setOpen(false)}>
-              <Button variant="ghost" className="w-full justify-start">
-                Contact Us
-              </Button>
-            </Link>
-            <Link to="/customer-services" onClick={() => setOpen(false)}>
-              <Button variant="ghost" className="w-full justify-start">
-                Customer Services
-              </Button>
-            </Link>
+            </Button>
+            {getInTouchOpen && ( // Conditionally render the links
+              <div className="mt-2 pl-4">
+                <Link to="/contact-us" onClick={() => setOpen(false)}>
+                  <Button variant="ghost" className="w-full justify-start">
+                    Contact Us
+                  </Button>
+                </Link>
+                <Link to="/customer-services" onClick={() => setOpen(false)}>
+                  <Button variant="ghost" className="w-full justify-start">
+                    Customer Services
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
         </nav>
       </SheetContent>

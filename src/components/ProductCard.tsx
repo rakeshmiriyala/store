@@ -129,8 +129,9 @@ export const ProductCard = ({ product }: ProductCardProps) => {
             onClick={handleAddToCart}
             disabled={!product.inStock}
           >
+            Add to
             <ShoppingCart className="h-4 w-4 mr-2" />
-            Add to Cart
+            
           </Button>
         </div>
       </CardContent>
