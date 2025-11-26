@@ -20,7 +20,7 @@ export const MobileMenu = ({ user }: MobileMenuProps) => {
           <span className="sr-only">Toggle menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="w-[280px]">
+      <SheetContent side="right" className="w-[280px] justify-end">
         <nav className="flex flex-col gap-2 mt-6">
           <Link to="/" onClick={() => setOpen(false)}>
             <Button variant="ghost" className="w-full justify-start">
@@ -57,7 +57,7 @@ export const MobileMenu = ({ user }: MobileMenuProps) => {
               className="w-full justify-start"
               onClick={() => setGetInTouchOpen(!getInTouchOpen)}
             >
-              Get in Touch
+              <span>Get in Touch    {">"} </span>
             </Button>
             {getInTouchOpen && ( // Conditionally render the links
               <div className="mt-2 pl-4">
