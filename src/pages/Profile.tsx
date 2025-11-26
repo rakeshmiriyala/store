@@ -70,45 +70,46 @@ const Profile = () => {
 
   const loadProfile = async (userId: string) => {
     try {
+      // TODO: Uncomment when database tables are created
       // Load profile
-      const { data: profileData, error: profileError } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("user_id", userId)
-        .single();
+      // const { data: profileData, error: profileError } = await supabase
+      //   .from("profiles")
+      //   .select("*")
+      //   .eq("user_id", userId)
+      //   .single();
 
-      if (profileError) throw profileError;
-      setProfile(profileData);
+      // if (profileError) throw profileError;
+      // setProfile(profileData);
 
       // Load roles
-      const { data: rolesData, error: rolesError } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", userId);
+      // const { data: rolesData, error: rolesError } = await supabase
+      //   .from("user_roles")
+      //   .select("role")
+      //   .eq("user_id", userId);
 
-      if (rolesError) throw rolesError;
-      setRoles(rolesData || []);
+      // if (rolesError) throw rolesError;
+      // setRoles(rolesData || []);
 
       // Load addresses
-      const { data: addressesData, error: addressesError } = await supabase
-        .from("addresses")
-        .select("*")
-        .eq("user_id", userId)
-        .order("is_default", { ascending: false });
+      // const { data: addressesData, error: addressesError } = await supabase
+      //   .from("addresses")
+      //   .select("*")
+      //   .eq("user_id", userId)
+      //   .order("is_default", { ascending: false });
 
-      if (addressesError) throw addressesError;
-      setAddresses(addressesData || []);
+      // if (addressesError) throw addressesError;
+      // setAddresses(addressesData || []);
 
       // Load orders
-      const { data: ordersData, error: ordersError } = await supabase
-        .from("orders")
-        .select("*")
-        .eq("user_id", userId)
-        .order("created_at", { ascending: false })
-        .limit(10);
+      // const { data: ordersData, error: ordersError } = await supabase
+      //   .from("orders")
+      //   .select("*")
+      //   .eq("user_id", userId)
+      //   .order("created_at", { ascending: false })
+      //   .limit(10);
 
-      if (ordersError) throw ordersError;
-      setOrders(ordersData || []);
+      // if (ordersError) throw ordersError;
+      // setOrders(ordersData || []);
     } catch (error: any) {
       toast({
         title: "Error",
@@ -133,20 +134,21 @@ const Profile = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      const { error } = await supabase
-        .from("profiles")
-        .update({
-          full_name: profile.full_name,
-          phone: profile.phone,
-          company_name: profile.company_name,
-        })
-        .eq("user_id", user.id);
+      // TODO: Uncomment when profiles table is created
+      // const { error } = await supabase
+      //   .from("profiles")
+      //   .update({
+      //     full_name: profile.full_name,
+      //     phone: profile.phone,
+      //     company_name: profile.company_name,
+      //   })
+      //   .eq("user_id", user.id);
 
-      if (error) throw error;
+      // if (error) throw error;
 
       toast({
-        title: "Success",
-        description: "Profile updated successfully",
+        title: "Profile updated (mock)",
+        description: "Database tables not yet created. Changes not saved.",
       });
       setEditMode(false);
     } catch (error: any) {

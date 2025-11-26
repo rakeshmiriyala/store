@@ -69,6 +69,17 @@ export const Header = () => {
               </a>
             </div>
             <div className="flex items-center gap-2 md:gap-4">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="h-8 w-8 text-primary-foreground hover:bg-primary-foreground/10" 
+                asChild
+              >
+                <Link to="/liked">
+                  <Heart className="h-4 w-4" />
+                  <span className="sr-only">Favorites</span>
+                </Link>
+              </Button>
               {user ? (
                 <div className="flex items-center gap-1 md:gap-2">
                   <Button 
@@ -128,12 +139,6 @@ export const Header = () => {
 
           {/* Actions */}
           <div className="flex items-center gap-1 md:gap-2">
-            <Button variant="ghost" size="icon" className="h-9 w-9 md:h-10 md:w-10" asChild>
-              <Link to="/liked">
-                <Heart className="h-4 w-4 md:h-5 md:w-5" />
-                <span className="sr-only">Wishlist</span>
-              </Link>
-            </Button>
             <Button variant="ghost" size="icon" className="relative h-9 w-9 md:h-10 md:w-10" asChild>
               <Link to="/cart">
                 <ShoppingCart className="h-4 w-4 md:h-5 md:w-5" />
@@ -164,7 +169,7 @@ export const Header = () => {
       {/* Navigation */}
       <nav className="border-t border-border overflow-x-auto">
         <div className="container mx-auto px-4">
-          <ul className="flex items-center gap-1 min-w-max md:min-w-0">
+          <ul className="flex items-center justify-center gap-1 min-w-max md:min-w-0">
             <li>
               <Button variant="ghost" className="rounded-none h-10 md:h-12 text-sm whitespace-nowrap" asChild>
                 <Link to="/">Home</Link>
@@ -181,11 +186,23 @@ export const Header = () => {
               </Button>
             </li>
             {!user && (
-              <li>
-                <Button variant="ghost" className="rounded-none h-10 md:h-12 text-sm whitespace-nowrap" asChild>
-                  <Link to="/auth">Sign Up / Sign In</Link>
-                </Button>
-              </li>
+              <>
+                <li>
+                  <Button variant="ghost" className="rounded-none h-10 md:h-12 text-sm whitespace-nowrap" asChild>
+                    <Link to="/auth">Sign In</Link>
+                  </Button>
+                </li>
+                <li>
+                  <Button variant="ghost" className="rounded-none h-10 md:h-12 text-sm whitespace-nowrap" asChild>
+                    <Link to="/new-customer-signup">New Customer Signup</Link>
+                  </Button>
+                </li>
+                <li>
+                  <Button variant="ghost" className="rounded-none h-10 md:h-12 text-sm whitespace-nowrap" asChild>
+                    <Link to="/new-supplier-signup">New Supplier Signup</Link>
+                  </Button>
+                </li>
+              </>
             )}
             <li>
               <DropdownMenu>

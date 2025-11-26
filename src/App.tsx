@@ -13,6 +13,8 @@ import Liked from "./pages/Liked";
 import FastOrder from "./pages/FastOrder";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
+import NewCustomerSignup from "./pages/NewCustomerSignup";
+import NewSupplierSignup from "./pages/NewSupplierSignup";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +36,10 @@ const App = () => (
             <Route path="/fast-order" element={<FastOrder />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/new-customer-signup" element={<NewCustomerSignup />} />
+            <Route path="/new-supplier-signup" element={<NewSupplierSignup />} />
+            <Route path="/contact-us" element={<NotFound />} />
+            <Route path="/customer-services" element={<NotFound />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -7,9 +7,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Upload, FileText, ShoppingCart, CheckCircle2, XCircle, Download } from "lucide-react";
+import { Upload, FileText, ShoppingCart, CheckCircle2, XCircle, Download, Loader2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { mockProducts } from "@/data/mockData";
+import { supabase } from "@/integrations/supabase/client";
+import { useCart } from "@/context/CartContext";
 
 interface ParsedItem {
   sku: string;
@@ -22,6 +24,8 @@ interface ParsedItem {
 const FastOrder = () => {
   const [pastedText, setPastedText] = useState("");
   const [parsedItems, setParsedItems] = useState<ParsedItem[]>([]);
+  const [isAiParsing, setIsAiParsing] = useState(false);
+  const { addItem } = useCart();
 
   const handleParse = () => {
     const lines = pastedText.trim().split('\n');
@@ -73,12 +77,78 @@ const FastOrder = () => {
     }
   };
 
+  const handleAiParse = async () => {
+    if (!pastedText.trim()) return;
+    
+    setIsAiParsing(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('parse-order', {
+        body: { text: pastedText }
+      });
+
+      if (error) throw error;
+
+      const items: ParsedItem[] = (data.items || []).map((item: { sku: string; quantity: number }) => {
+        const product = mockProducts.find(p => p.sku === item.sku);
+        
+        if (!product) {
+          return {
+            sku: item.sku,
+            quantity: item.quantity,
+            status: 'not-found' as const,
+            message: 'SKU not found'
+          };
+        }
+
+        return {
+          sku: item.sku,
+          quantity: item.quantity,
+          status: 'valid' as const,
+          product
+        };
+      });
+
+      setParsedItems(items);
+      
+      if (items.length === 0) {
+        toast.error("No valid items found. Please check your format.");
+      } else {
+        toast.success(`AI parsed ${items.filter(i => i.status === 'valid').length} valid items`);
+      }
+    } catch (error: any) {
+      console.error('AI parse error:', error);
+      toast.error(error.message || "Failed to parse with AI. Try manual parsing.");
+    } finally {
+      setIsAiParsing(false);
+    }
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      const text = event.target?.result as string;
+      setPastedText(text);
+      toast.success("File loaded successfully");
+    };
+    reader.readAsText(file);
+  };
+
   const handleAddToCart = () => {
     const validItems = parsedItems.filter(i => i.status === 'valid');
     if (validItems.length === 0) {
       toast.error("No valid items to add to cart");
       return;
     }
+    
+    validItems.forEach(item => {
+      if (item.product) {
+        addItem(item.product, item.quantity);
+      }
+    });
+    
     toast.success(`Added ${validItems.length} items to cart`);
     setParsedItems([]);
     setPastedText("");
@@ -154,16 +224,59 @@ const FastOrder = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Input
+                    type="file"
+                    accept=".txt,.csv"
+                    onChange={handleFileUpload}
+                    className="cursor-pointer"
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Upload a .txt or .csv file with SKU and quantity
+                  </p>
+                </div>
+
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t" />
+                  </div>
+                  <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-background px-2 text-muted-foreground">Or paste text</span>
+                  </div>
+                </div>
+
                 <Textarea
                   placeholder="Paste your order list here...&#10;Example:&#10;PAS-001 5&#10;PAS-002 10&#10;BEV-001 3"
-                  className="min-h-[200px] font-mono text-sm"
+                  className="min-h-[150px] font-mono text-sm"
                   value={pastedText}
                   onChange={(e) => setPastedText(e.target.value)}
                 />
                 
-                <Button className="w-full" onClick={handleParse} disabled={!pastedText.trim()}>
-                  Parse & Validate
-                </Button>
+                <div className="grid grid-cols-2 gap-2">
+                  <Button 
+                    variant="outline" 
+                    onClick={handleParse} 
+                    disabled={!pastedText.trim() || isAiParsing}
+                  >
+                    Manual Parse
+                  </Button>
+                  <Button 
+                    onClick={handleAiParse} 
+                    disabled={!pastedText.trim() || isAiParsing}
+                  >
+                    {isAiParsing ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        Parsing...
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="h-4 w-4 mr-2" />
+                        AI Parse
+                      </>
+                    )}
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </div>
