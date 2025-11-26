@@ -1,155 +1,166 @@
+import React from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
-import { 
+import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Package, CreditCard, Truck, RefreshCw, Shield, HelpCircle } from "lucide-react";
+import {
+  Package,
+  CreditCard,
+  Truck,
+  RefreshCw,
+  Shield,
+  HelpCircle,
+  Phone,
+  Mail,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Link } from "react-router-dom";
 
-const CustomerServices = () => {
+const CustomerServices: React.FC = () => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Customer services form submitted");
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      
-      <main className="flex-1 container mx-auto px-4 py-8">
-        <div className="max-w-5xl mx-auto">
-          <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold mb-2">Customer Services</h1>
-            <p className="text-muted-foreground">
-              Everything you need to know about ordering, delivery, returns and more
-            </p>
+
+      <main className="flex-1">
+        <section className="bg-white">
+          {/* CENTER CONTENT */}
+          <div className="mx-auto flex justify-center md:justify-center max-w-6xl px-4 py-10 md:px-6 md:py-12">
+
+            <div className="w-full md:w-[55%]">
+              <Card className="sticky top-20 shadow-md">
+                <CardContent className="p-5">
+                  <h2 className="text-2xl font-semibold text-slate-900">
+                    Sales Requests
+                  </h2>
+                  <form
+                    onSubmit={handleSubmit}
+                    className="mt-4 space-y-4 text-sm"
+                  >
+
+                    <div className="space-y-1.5">
+                      <Label htmlFor="company">Company Shop Name</Label>
+                      <Input id="company" name="company" placeholder="Your business name" />
+                    </div>
+
+                    <div className="flex-1 space-y-1.5">
+                        <Label htmlFor="email">Email address</Label>
+                        <Input id="email" name="email" placeholder="Your Email Address" type="email" autoComplete="email" required />
+                      </div>
+
+                    <div className="space-y-1.5">
+                      <Label htmlFor="enquiryType">Enquiry type</Label>
+                      <select
+                        id="enquiryType"
+                        name="enquiryType"
+                        className="h-9 w-full rounded-md border border-slate-300 bg-white px-3 text-sm text-slate-900 shadow-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
+                        required
+                      >
+                        <option value="">Please select</option>
+                        <option value="order">Order / delivery</option>
+                        <option value="returns">Returns / damages</option>
+                        <option value="account">Account / payment</option>
+                        <option value="product">Product information</option>
+                        <option value="general">General enquiry</option>
+                        <option value="supplier">New supplier enquiry</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <Label htmlFor="accountType">
+                        Customer / supplier type
+                      </Label>
+                      <select
+                        id="accountType"
+                        name="accountType"
+                        className="h-9 w-full rounded-md border border-slate-300 bg-white px-3 text-sm text-slate-900 shadow-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
+                      >
+                        <option value="">Please select</option>
+                        <option value="trade">Trade customer</option>
+                        <option value="retail">Retail customer</option>
+                        <option value="supplier">Supplier</option>
+                        <option value="prospect">Prospective customer</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+
+                    
+
+                    <div className="flex flex-col gap-3 md:flex-row">
+                      <div className="flex-1 space-y-1.5">
+                        <Label htmlFor="firstName">First name</Label>
+                        <Input id="firstName" name="firstName" autoComplete="given-name" required />
+                      </div>
+                      <div className="flex-1 space-y-1.5">
+                        <Label htmlFor="lastName">Last name</Label>
+                        <Input id="lastName" name="lastName" autoComplete="family-name" required />
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-3 md:flex-row">
+                      
+                      <div className="flex-1 space-y-1.5">
+                        <Label htmlFor="phone">Contact number</Label>
+                        <Input id="phone" name="phone" type="tel" placeholder="+44 ..." />
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-3 md:flex-row">
+                      <div className="flex-1 space-y-1.5">
+                        <Label htmlFor="accountNumber">Account number (optional)</Label>
+                        <Input id="accountNumber" name="accountNumber" placeholder="Optional" />
+                      </div>
+                      <div className="flex-1 space-y-1.5">
+                        <Label htmlFor="orderNumber">Order / invoice number</Label>
+                        <Input id="orderNumber" name="orderNumber" placeholder="Optional" />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <Label htmlFor="subject">Subject</Label>
+                      <Input id="subject" name="subject" placeholder="Brief summary" required />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <Label htmlFor="message">Message</Label>
+                      <Textarea
+                        id="message"
+                        name="message"
+                        rows={5}
+                        placeholder="Include relevant details such as product codes, quantities, delivery dates, etc."
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-2 rounded-md bg-slate-50 p-3 text-[11px] text-slate-600">
+                      <p>
+                        By submitting this form you agree that we may use the
+                        details you provide to respond to your enquiry. Your data
+                        will be handled in line with our privacy policy.
+                      </p>
+                    </div>
+
+                    <Button type="submit" className="mt-1 w-full rounded-full text-sm font-medium">
+                      Send enquiry
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+            </div>
           </div>
-
-          {/* Quick Links */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-12">
-            <Card className="hover:shadow-lg transition-smooth cursor-pointer">
-              <CardContent className="p-4 text-center">
-                <Package className="h-8 w-8 mx-auto mb-2 text-primary" />
-                <p className="text-sm font-medium">Orders</p>
-              </CardContent>
-            </Card>
-            <Card className="hover:shadow-lg transition-smooth cursor-pointer">
-              <CardContent className="p-4 text-center">
-                <Truck className="h-8 w-8 mx-auto mb-2 text-primary" />
-                <p className="text-sm font-medium">Delivery</p>
-              </CardContent>
-            </Card>
-            <Card className="hover:shadow-lg transition-smooth cursor-pointer">
-              <CardContent className="p-4 text-center">
-                <CreditCard className="h-8 w-8 mx-auto mb-2 text-primary" />
-                <p className="text-sm font-medium">Payment</p>
-              </CardContent>
-            </Card>
-            <Card className="hover:shadow-lg transition-smooth cursor-pointer">
-              <CardContent className="p-4 text-center">
-                <RefreshCw className="h-8 w-8 mx-auto mb-2 text-primary" />
-                <p className="text-sm font-medium">Returns</p>
-              </CardContent>
-            </Card>
-            <Card className="hover:shadow-lg transition-smooth cursor-pointer">
-              <CardContent className="p-4 text-center">
-                <Shield className="h-8 w-8 mx-auto mb-2 text-primary" />
-                <p className="text-sm font-medium">Quality</p>
-              </CardContent>
-            </Card>
-            <Card className="hover:shadow-lg transition-smooth cursor-pointer">
-              <CardContent className="p-4 text-center">
-                <HelpCircle className="h-8 w-8 mx-auto mb-2 text-primary" />
-                <p className="text-sm font-medium">FAQ</p>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* FAQ Accordion */}
-          <Card>
-            <CardContent className="p-6">
-              <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
-              
-              <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="item-1">
-                  <AccordionTrigger>How do I place an order?</AccordionTrigger>
-                  <AccordionContent>
-                    You can place an order by browsing our products, adding items to your cart, and proceeding to checkout. 
-                    For bulk orders, use our Fast Order feature to quickly add multiple items using SKU codes.
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-2">
-                  <AccordionTrigger>What are your delivery times?</AccordionTrigger>
-                  <AccordionContent>
-                    We offer next-day delivery for orders placed before 2 PM. Standard delivery takes 2-3 business days. 
-                    Delivery times may vary depending on your location and product availability.
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-3">
-                  <AccordionTrigger>What payment methods do you accept?</AccordionTrigger>
-                  <AccordionContent>
-                    We accept all major credit and debit cards, as well as bank transfers for trade accounts. 
-                    Payment is processed securely through our encrypted payment gateway.
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-4">
-                  <AccordionTrigger>What is your returns policy?</AccordionTrigger>
-                  <AccordionContent>
-                    We accept returns within 14 days of delivery for unopened products in their original packaging. 
-                    For damaged or incorrect items, please contact us within 48 hours of delivery. 
-                    Some perishable items may not be eligible for return.
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-5">
-                  <AccordionTrigger>Do you have minimum order quantities?</AccordionTrigger>
-                  <AccordionContent>
-                    For retail customers, there is no minimum order. Trade accounts may have minimum order values 
-                    to qualify for wholesale pricing and free delivery. Contact our sales team for more information.
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-6">
-                  <AccordionTrigger>How can I track my order?</AccordionTrigger>
-                  <AccordionContent>
-                    Once your order is dispatched, you'll receive a tracking number via email. 
-                    You can use this to track your delivery online. Log into your account to view all your order history and tracking information.
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-7">
-                  <AccordionTrigger>Do you offer bulk discounts?</AccordionTrigger>
-                  <AccordionContent>
-                    Yes! We offer competitive wholesale pricing for bulk orders and trade accounts. 
-                    Register for a trade account or contact our sales team to discuss volume discounts for your business.
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-8">
-                  <AccordionTrigger>What if an item is out of stock?</AccordionTrigger>
-                  <AccordionContent>
-                    Out of stock items are clearly marked on our website. You can request a notification when the item 
-                    is back in stock, or contact our customer service team who may be able to suggest alternatives or 
-                    provide an estimated restock date.
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-
-              <div className="mt-8 p-6 bg-muted rounded-lg text-center">
-                <h3 className="text-xl font-semibold mb-2">Still have questions?</h3>
-                <p className="text-muted-foreground mb-4">
-                  Our customer service team is here to help
-                </p>
-                <Button asChild>
-                  <Link to="/contact-us">Contact Us</Link>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        </section>
       </main>
 
       <Footer />
