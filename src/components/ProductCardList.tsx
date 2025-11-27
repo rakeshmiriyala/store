@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Product } from "@/types/product";
 import { toast } from "sonner";
 import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
 import { productImages } from "@/utils/imageHelper";
 import { buildProductPath } from "@/utils/productRoutes";
 
@@ -16,8 +17,9 @@ interface ProductCardListProps {
 
 export const ProductCardList = ({ product }: ProductCardListProps) => {
   const { addItem } = useCart();
+  const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlist();
   const [quantity, setQuantity] = useState(1);
-  const [isLiked, setIsLiked] = useState(false);
+  const isLiked = isInWishlist(product.id);
 
   // Handle both direct URLs and product image keys
   const productImage = product.images[0]
@@ -32,8 +34,13 @@ export const ProductCardList = ({ product }: ProductCardListProps) => {
   };
 
   const handleToggleLike = () => {
-    setIsLiked(!isLiked);
-    toast.success(isLiked ? "Removed from wishlist" : "Added to wishlist");
+    if (isLiked) {
+      removeFromWishlist(product.id);
+      toast.success("Removed from wishlist");
+    } else {
+      addToWishlist(product);
+      toast.success("Added to wishlist");
+    }
   };
 
   return (
