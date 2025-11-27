@@ -52,7 +52,7 @@ export const ProductCardList = ({ product }: ProductCardListProps) => {
           )}
         </Link>
 
-        <div className="flex-1 min-w-0">
+        <Link to={buildProductPath(product)} className="flex-1 min-w-0">
           <div className="mb-2">
             <p className="text-xs text-muted-foreground font-mono">{product.sku}</p>
             {product.brand && (
@@ -60,10 +60,8 @@ export const ProductCardList = ({ product }: ProductCardListProps) => {
             )}
           </div>
 
-          <h3 className="font-semibold text-base mb-1">
-            <Link to={buildProductPath(product)} className="hover:text-primary transition-smooth">
-              {product.name}
-            </Link>
+          <h3 className="font-semibold text-base mb-1 hover:text-primary transition-smooth">
+            {product.name}
           </h3>
 
           {product.shortDescription && (
@@ -75,7 +73,7 @@ export const ProductCardList = ({ product }: ProductCardListProps) => {
           {product.packSize && (
             <p className="text-xs text-muted-foreground mb-2">{product.packSize} {product.unit}</p>
           )}
-        </div>
+        </Link>
 
         <div className="flex flex-col items-end justify-between flex-shrink-0">
           <div className="flex gap-2">
@@ -85,7 +83,10 @@ export const ProductCardList = ({ product }: ProductCardListProps) => {
               className={`bg-background/80 backdrop-blur-sm hover:bg-background ${
                 isLiked ? "text-destructive" : ""
               }`}
-              onClick={handleToggleLike}
+              onClick={(e) => {
+                e.preventDefault();
+                handleToggleLike();
+              }}
             >
               <Heart className={`h-5 w-5 ${isLiked ? "fill-current" : ""}`} />
             </Button>
