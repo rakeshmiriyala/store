@@ -152,7 +152,10 @@ const Shop = () => {
             
             return (
               <div key={category.id} className="space-y-0.5">
-                <div className="flex items-center">
+                <div 
+                  className="flex items-center"
+                  onMouseEnter={() => hasSubcategories && !openCategories.includes(category.id) && toggleCategory(category.id)}
+                >
                   <div 
                     className={`flex items-center space-x-2 flex-1 py-1.5 px-2 rounded cursor-pointer transition-colors ${
                       isSelected ? 'bg-primary/10 text-primary' : 'hover:bg-muted'
@@ -188,7 +191,10 @@ const Shop = () => {
                       
                       return (
                         <div key={subcat.id} className="space-y-0.5">
-                          <div className="flex items-center">
+                           <div 
+                            className="flex items-center"
+                            onMouseEnter={() => hasLevel3 && !openCategories.includes(subcat.id) && toggleCategory(subcat.id)}
+                          >
                             <div 
                               className={`flex items-center space-x-2 flex-1 py-1 px-2 rounded cursor-pointer transition-colors ${
                                 isSubSelected ? 'bg-primary/10 text-primary' : 'hover:bg-muted'
