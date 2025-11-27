@@ -44,8 +44,8 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   return (
-    <Card className="group overflow-hidden hover:shadow-elegant-hover transition-smooth">
-      <Link to={buildProductPath(product)} className="block">
+    <Card className="group flex flex-col overflow-hidden hover:shadow-elegant-hover transition-smooth h-full">
+      <Link to={buildProductPath(product)} className="block flex-shrink-0">
         <div className="relative aspect-square overflow-hidden bg-neutral-100">
           <img
             src={productImage}
@@ -106,7 +106,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         </CardContent>
       </Link>
 
-      <CardContent className="p-4 pt-0">
+      <CardContent className="p-4 pt-0 flex-shrink-0">
         <div className="flex items-center gap-2">
           <div className="flex items-center border border-border rounded-md">
             <Button
@@ -150,9 +150,8 @@ export const ProductCard = ({ product }: ProductCardProps) => {
             }}
             disabled={!product.inStock}
           >
-            Add to
             <ShoppingCart className="h-4 w-4 mr-2" />
-            
+            Add
           </Button>
         </div>
       </CardContent>
