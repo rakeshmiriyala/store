@@ -7,14 +7,15 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Minus, Plus, Trash2, ArrowRight, ShoppingBag } from "lucide-react";
-import { mockProducts } from "@/data/mockData";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { User as SupabaseUser } from "@supabase/supabase-js";
+import { useCart } from "@/context/CartContext";
 
 const Cart = () => {
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const navigate = useNavigate();
+  const { items: cartItems, updateQuantity: updateCartQuantity, removeItem: removeCartItem, totalPrice } = useCart();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -28,28 +29,17 @@ const Cart = () => {
     return () => subscription.unsubscribe();
   }, []);
 
-  // Mock cart items
-  const [cartItems, setCartItems] = useState([
-    { ...mockProducts[0], quantity: 2 },
-    { ...mockProducts[1], quantity: 1 },
-    { ...mockProducts[2], quantity: 3 },
-  ]);
-
   const updateQuantity = (id: string, newQuantity: number) => {
     if (newQuantity < 1) return;
-    setCartItems(items =>
-      items.map(item =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
-    );
+    updateCartQuantity(id, newQuantity);
   };
 
   const removeItem = (id: string) => {
-    setCartItems(items => items.filter(item => item.id !== id));
+    removeCartItem(id);
     toast.success("Item removed from cart");
   };
 
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const subtotal = totalPrice;
   const shipping = subtotal > 100 ? 0 : 9.99;
   const total = subtotal + shipping;
 

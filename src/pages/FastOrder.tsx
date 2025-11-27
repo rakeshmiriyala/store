@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Upload, FileText, ShoppingCart, CheckCircle2, XCircle, Download, Loader2, Sparkles, Plus } from "lucide-react";
+import { Upload, FileText, ShoppingCart, CheckCircle2, XCircle, Download, Loader2, Sparkles, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { mockProducts } from "@/data/mockData";
 import { supabase } from "@/integrations/supabase/client";
@@ -197,6 +197,11 @@ const FastOrder = () => {
 
     setManualSku("");
     setManualQuantity("1");
+  };
+
+  const handleRemoveItem = (sku: string) => {
+    setParsedItems(prev => prev.filter(item => item.sku !== sku));
+    toast.success("Item removed from order list");
   };
 
   const downloadTemplate = () => {
@@ -417,6 +422,7 @@ const FastOrder = () => {
                         <TableHead className="text-right">Price</TableHead>
                         <TableHead className="text-right">Subtotal</TableHead>
                         <TableHead>Status</TableHead>
+                        <TableHead className="text-right">Action</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -445,6 +451,16 @@ const FastOrder = () => {
                                 {item.message}
                               </Badge>
                             )}
+                          </TableCell>
+                          <TableCell className="text-right">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleRemoveItem(item.sku)}
+                              className="h-8 w-8 p-0"
+                            >
+                              <Trash2 className="h-4 w-4 text-destructive" />
+                            </Button>
                           </TableCell>
                         </TableRow>
                       ))}
