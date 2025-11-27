@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: true,           // ✅ allows external access
     port: 5173,           // optional, custom port
-    allowedHosts: ["insight-dashboard-j9t6.onrender.com"], // ✅ optional in Render
+    allowedHosts: ["store-oxsn.onrender.com"], // ✅ optional in Render
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
