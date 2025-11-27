@@ -6,7 +6,7 @@ import { componentTagger } from "lovable-tagger";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
-    allowedports:["store-oxsn.onrender.com"]
+    allowedHosts:["store-oxsn.onrender.com"]
     host: true,
     port: 8080,
   },
