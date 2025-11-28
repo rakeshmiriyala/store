@@ -5,10 +5,10 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  server: {
+   server: {
     host: true,           // ✅ allows external access
     port: 5173,           // optional, custom port
-    allowedHosts: ["store-oxsn.onrender.com"], // ✅ optional in Render
+    allowedHosts: ["store-oxsn.onrender.com","store-qk5w.onrender.com"], // ✅ optional in Render
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
