@@ -12,6 +12,8 @@ export default defineConfig(({ mode }) => ({
     allowedHosts: [
       "store-oxsn.onrender.com",
       "store-qk5w.onrender.com",
+      "natureliawholefood.com",
+      "www.natureliawholefood.com",
     ],
   },
   plugins: [
