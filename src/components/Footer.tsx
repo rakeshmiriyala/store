@@ -96,8 +96,8 @@ export const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="mailto:hello@naturelia.co.uk" className="hover:text-primary transition-smooth">
-                  hello@naturelia.co.uk
+                <a href="mailto:sales@natureliawholefoods.com" className="hover:text-primary transition-smooth">
+                  sales@natureliawholefoods.com
                 </a>
               </li>
             </ul>

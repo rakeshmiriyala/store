@@ -99,11 +99,11 @@ export const Header = () => {
                 <span className="hidden sm:inline">+44 123 456 789</span>
               </a>
               <a
-                href="mailto:hello@naturelia.co.uk"
+                href="mailto:sales@natureliawholefoods.com"
                 className="flex items-center gap-2 hover:opacity-80"
               >
                 <Mail className="h-4 w-4" />
-                <span className="hidden sm:inline">hello@naturelia.co.uk</span>
+                <span className="hidden sm:inline">sales@natureliawholefoods.com</span>
               </a>
             </div>
 
