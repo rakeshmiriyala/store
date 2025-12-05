@@ -102,10 +102,10 @@ const NewCustomerSignup = () => {
       <Header />
       
       <main className="flex-1 container mx-auto px-4 py-8">
-        <p className="text-center text-muted-foreground mb-8 max-w-4xl mx-auto">
+        {/* <p className="text-center text-muted-foreground mb-8 max-w-4xl mx-auto">
           No two customers are the same. Unlike other distributors, we do not believe in a 'one size fits all' model. 
           That is why we utilise the latest technologies to provide a tailored service for our customer base. Here is what we offer:
-        </p>
+        </p> */}
 
         <div className="max-w-2xl mx-auto">
           <Card className="shadow-sm">
